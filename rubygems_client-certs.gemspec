@@ -12,9 +12,9 @@ Gem::Specification.new do |s|
   s.summary = %q{Fix ssl client cert behavior in rubygems}
   s.description = %q{A rubygems plugin that monkey-patches rubygems to support ssl client certs}
 
-  s.files = `svn list -R`.split("\n")
-  s.test_files = `svn list -R`.split("\n").delete_if {|x| x !~ /^(test|spec|features)/}
-  s.executables = `svn list -R`.split("\n").delete_if {|x| x !~ /^bin\//}
+  s.files = `git ls-files`.split("\n")
+  s.test_files = `git ls-files -- {test,spec,features}/*`.split("\n")
+  s.executables = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
   s.add_development_dependency "rake"
