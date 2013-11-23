@@ -1,0 +1,11 @@
+---
+:backtrace: false
+:benchmark: false
+:bulk_threshold: 1000
+:sources:
+- http://rubygems.org/
+:update_sources: true
+:verbose: true
+:ssl_verify_mode: bob
+:ssl_ca_cert: steve
+:ssl_client_cert: dave
