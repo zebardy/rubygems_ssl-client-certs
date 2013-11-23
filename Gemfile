@@ -2,7 +2,7 @@ source "http://rubygems.org"
 
 # Specify your gem's dependencies in rubygems-noproxy.gemspec
 gemspec
-group :test do
-  gem 'rake'
-  gem 'rspec-core'
-end
+#group :test do
+#  gem 'rake'
+#  gem 'rspec-core'
+#end
