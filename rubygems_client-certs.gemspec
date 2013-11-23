@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.name = "rubygems_client-certs"
   s.version = Rubygems::ClientCerts::VERSION
   s.authors = ["Aaron Moses"]
-  s.homepage = "https://repo.dev.bbc.co.uk/playground/mosesa02/rubygems_client-certs"
+  s.homepage = "https://github.com/zebardy/rubygems_ssl-client-certs"
   s.licenses = ["MIT"]
   s.summary = %q{Fix ssl client cert behavior in rubygems}
   s.description = %q{A rubygems plugin that monkey-patches rubygems to support ssl client certs}
