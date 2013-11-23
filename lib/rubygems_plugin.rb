@@ -8,13 +8,16 @@ class Gem::ConfigFile
 
   attr_reader :ssl_ca_cert
 
-  @@old_init = instance_method(:initialize)
+  class << self
+    alias_method :__new__, :new
+    def new(*args)
+      config = __new__(*args)
+      config.set_ssl_vars
+      return config
+    end
+  end
 
-  def initialize(args)
-    puts "calling original init"
-    @@old_init.bind(self).call(args)
-
-    puts "initializing ssl vars"
+  def set_ssl_vars
     @ssl_verify_mode = @hash[:ssl_verify_mode] if @hash.key? :ssl_verify_mode
     @ssl_ca_cert = @hash[:ssl_ca_cert] if @hash.key? :ssl_ca_cert
     @ssl_ca_cert = ENV['BUNDLE_SSL_CA_CERT'] unless @ssl_ca_cert
