@@ -66,10 +66,7 @@ class Gem::RemoteFetcher
 
     #if Gem.configuration.ssl_client_cert
     if ENV['BUNDLE_SSL_CLIENT_CERT']
-      #puts "Client_cert: " + Gem.configuration.ssl_client_cert
-      puts "Client_cert: " + ENV['BUNDLE_SSL_CLIENT_CERT']
-      #pem = File.read(Gem.configuration.ssl_client_cert)
-      pem = File.read(ENV['BUNDLE_SSL_CLIENT_CERT'])
+      pem = File.read(Gem.configuration.ssl_client_cert)
       connection.cert = OpenSSL::X509::Certificate.new(pem)
       connection.key = OpenSSL::PKey::RSA.new(pem)
     else
@@ -78,18 +75,11 @@ class Gem::RemoteFetcher
 
     #if Gem.configuration.ssl_ca_cert
     if ENV['BUNDLE_SSL_CA_CERT']
-      puts "CA_cert: " + ENV['BUNDLE_SSL_CA_CERT']
-      if File.directory? ENV['BUNDLE_SSL_CA_CERT']
-        store.add_path ENV['BUNDLE_SSL_CA_CERT']
+      if File.directory? Gem.configuration.ssl_ca_cert
+        store.add_path Gem.configuration.ssl_ca_cert
       else
-        store.add_file ENV['BUNDLE_SSL_CA_CERT']
+        store.add_file Gem.configuration.ssl_ca_cert
       end
-      #puts "CA_cert: " + Gem.configuration.ssl_ca_cert
-      #if File.directory? Gem.configuration.ssl_ca_cert
-      #  store.add_path Gem.configuration.ssl_ca_cert
-      #else
-      #  store.add_file Gem.configuration.ssl_ca_cert
-      #end
     else
       puts "no CA Cert found!"
       store.set_default_paths
