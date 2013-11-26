@@ -8,5 +8,3 @@ deploy:
   provider: rubygems
   api_key:
     secure: H97wLo76fndF6JG5PUOe141oDQDjqri9vSXqJSjjdB5VwnPbYhwnS1mt4NANNi4UsqmqHkGRXJufNWJ2LRzz3CNX4/wFEDHLSZxu8PuHy68M9wPpOQLZwYk6sX5R47wOjsVA3Ob5/79ftndv3ipHkLGxLj56Z8XEjQ+FUzUwbiI=
-  on:
-    tags: true
