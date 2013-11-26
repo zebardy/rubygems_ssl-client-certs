@@ -5,6 +5,7 @@ require "rubygems_client-certs/version"
 Gem::Specification.new do |s|
   s.name = "rubygems_client-certs"
   s.version = Rubygems::ClientCerts::VERSION
+  s.version = "#{s.version}-alpha-#{ENV['TRAVIS_BUILD_NUMBER']}" if ENV['TRAVIS']
   s.authors = ["Aaron Moses"]
   s.homepage = "https://github.com/zebardy/rubygems_ssl-client-certs"
   s.licenses = ["MIT"]

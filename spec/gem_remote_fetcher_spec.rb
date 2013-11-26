@@ -19,4 +19,9 @@ describe Gem::RemoteFetcher do
       fetcher.https?(URI("http://www.example.com")).should be_false
     end
   end
+
+  describe "#configure_connection_for_https" do
+    
+  end
+
 end
