@@ -1,4 +1,4 @@
-require "rubygems_client-certs/version"
+require "rubygems_ssl-client-certs/version"
 
 module Rubygems
   module ClientCerts
