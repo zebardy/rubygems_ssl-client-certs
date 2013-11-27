@@ -3,7 +3,7 @@ $:.push File.expand_path("../lib", __FILE__)
 require "rubygems_client-certs/version"
 
 Gem::Specification.new do |s|
-  s.name = "rubygems_client-certs"
+  s.name = "rubygems_ssl-client-certs"
   s.version = Rubygems::ClientCerts::VERSION
   s.version = "#{s.version}-alpha-#{ENV['TRAVIS_BUILD_NUMBER']}" if ENV['TRAVIS']
   s.authors = ["Aaron Moses"]
