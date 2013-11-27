@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
-require "rubygems_client-certs/version"
+require "rubygems_ssl-client-certs/version"
 
 Gem::Specification.new do |s|
   s.name = "rubygems_ssl-client-certs"
