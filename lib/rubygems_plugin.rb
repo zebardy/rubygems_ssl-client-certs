@@ -11,6 +11,7 @@ class Gem::ConfigFile
   class << self
     alias_method :__new__, :new
     def new(*args)
+      puts "instaniating new Gem::ConfigFile"
       config = __new__(*args)
       config.set_ssl_vars
       return config
