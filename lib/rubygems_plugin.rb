@@ -14,6 +14,7 @@ class Gem::ConfigFile
       puts "instaniating new Gem::ConfigFile"
       config = __new__(*args)
       config.set_ssl_vars
+      puts "Gem::ConfigFile instantiated"
       return config
     end
   end
