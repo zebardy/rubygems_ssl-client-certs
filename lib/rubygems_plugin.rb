@@ -64,24 +64,22 @@ class Gem::RemoteFetcher
       Gem.configuration.ssl_verify_mode || OpenSSL::SSL::VERIFY_PEER
     store = OpenSSL::X509::Store.new
 
-    #if Gem.configuration.ssl_client_cert
-    if ENV['BUNDLE_SSL_CLIENT_CERT']
+    if Gem.configuration.ssl_client_cert
       pem = File.read(Gem.configuration.ssl_client_cert)
       connection.cert = OpenSSL::X509::Certificate.new(pem)
       connection.key = OpenSSL::PKey::RSA.new(pem)
     else
-      puts "no Client Cert found!"
+      puts "no Client Cert configured!"
     end
 
-    #if Gem.configuration.ssl_ca_cert
-    if ENV['BUNDLE_SSL_CA_CERT']
+    if Gem.configuration.ssl_ca_cert
       if File.directory? Gem.configuration.ssl_ca_cert
         store.add_path Gem.configuration.ssl_ca_cert
       else
         store.add_file Gem.configuration.ssl_ca_cert
       end
     else
-      puts "no CA Cert found!"
+      puts "no CA Cert configured!"
       store.set_default_paths
       add_rubygems_trusted_certs(store)
     end
