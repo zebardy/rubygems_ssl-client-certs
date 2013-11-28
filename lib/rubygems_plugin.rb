@@ -9,12 +9,12 @@ class Gem::ConfigFile
   attr_reader :ssl_ca_cert
 
   class << self
-    alias_method :__new__, :new
+    unless self.method_defined? :__new__
+      alias_method :__new__, :new
+    end
     def new(*args)
-      puts "instaniating new Gem::ConfigFile"
       config = __new__(*args)
       config.set_ssl_vars
-      puts "Gem::ConfigFile instantiated"
       return config
     end
   end
