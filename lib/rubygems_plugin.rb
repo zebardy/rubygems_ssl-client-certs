@@ -2,7 +2,7 @@ require 'rubygems/remote_fetcher'
 
 stderr.puts "rubygems ssl client certs plugin loading"
 
-if Gem::Version <= '2.0.4' then
+if Gem::Version < '2.1.0' then
   class Gem::ConfigFile
 
     attr_reader :ssl_client_cert
