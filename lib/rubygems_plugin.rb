@@ -9,7 +9,7 @@ class Gem::ConfigFile
   attr_reader :ssl_verify_mode
 
   attr_reader :ssl_ca_cert
-  puts.stderr "loading Gem::ConfigFile monkey patch"
+  stderr.puts "loading Gem::ConfigFile monkey patch"
 
   class << self
     unless self.method_defined? :__new__
