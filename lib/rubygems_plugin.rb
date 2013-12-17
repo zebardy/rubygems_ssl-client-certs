@@ -1,5 +1,7 @@
 require 'rubygems/remote_fetcher'
 
+puts "rubygems ssl client certs plugin loading"
+
 class Gem::ConfigFile
 
   attr_reader :ssl_client_cert
@@ -13,6 +15,7 @@ class Gem::ConfigFile
       alias_method :__new__, :new
     end
     def new(*args)
+      puts "instantiating new Gem::ConfigFile with patch"
       config = __new__(*args)
       config.set_ssl_vars
       return config
@@ -20,6 +23,7 @@ class Gem::ConfigFile
   end
 
   def set_ssl_vars
+    puts "Configuring SSL variables for Gem::ConfigFile"
     @ssl_verify_mode = @hash[:ssl_verify_mode] if @hash.key? :ssl_verify_mode
     @ssl_ca_cert = @hash[:ssl_ca_cert] if @hash.key? :ssl_ca_cert
     @ssl_ca_cert = ENV['BUNDLE_SSL_CA_CERT'] unless @ssl_ca_cert
@@ -72,6 +76,9 @@ class Gem::RemoteFetcher
       connection.key = OpenSSL::PKey::RSA.new(pem)
     else
       puts "no Client Cert configured!"
+      if !Gem.configuration.respond_to?(:ssl_client_cert)
+        puts "Loaded Gem::ConfigFile does not support ssl_client_cert"
+      end
     end
 
     if Gem.configuration.ssl_ca_cert
