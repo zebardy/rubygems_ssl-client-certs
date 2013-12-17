@@ -1,6 +1,6 @@
 require 'rubygems/remote_fetcher'
 
-puts "rubygems ssl client certs plugin loading"
+stderr.puts "rubygems ssl client certs plugin loading"
 
 class Gem::ConfigFile
 
@@ -9,13 +9,14 @@ class Gem::ConfigFile
   attr_reader :ssl_verify_mode
 
   attr_reader :ssl_ca_cert
+  puts.stderr "loading Gem::ConfigFile monkey patch"
 
   class << self
     unless self.method_defined? :__new__
       alias_method :__new__, :new
     end
     def new(*args)
-      puts "instantiating new Gem::ConfigFile with patch"
+      stderr.puts "instantiating new Gem::ConfigFile with patch"
       config = __new__(*args)
       config.set_ssl_vars
       return config
@@ -23,7 +24,7 @@ class Gem::ConfigFile
   end
 
   def set_ssl_vars
-    puts "Configuring SSL variables for Gem::ConfigFile"
+    stderr.puts "Configuring SSL variables for Gem::ConfigFile"
     @ssl_verify_mode = @hash[:ssl_verify_mode] if @hash.key? :ssl_verify_mode
     @ssl_ca_cert = @hash[:ssl_ca_cert] if @hash.key? :ssl_ca_cert
     @ssl_ca_cert = ENV['BUNDLE_SSL_CA_CERT'] unless @ssl_ca_cert
