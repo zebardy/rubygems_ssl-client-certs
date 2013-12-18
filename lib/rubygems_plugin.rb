@@ -4,14 +4,6 @@ $stderr.puts "rubygems ssl client certs plugin loading"
 
 if Gem::Version.new(Gem::VERSION) < Gem::Version.new('2.1.0') then
 
-  class Gem::Version
-
-    def self.correct? version
-      version.to_s =~ /\A\s*([0-9]+(?>\.[0-9a-zA-Z]+)*(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?)?\s*\z/
-    end
-
-  end
-
   class Gem::ConfigFile
 
     attr_reader :ssl_client_cert
@@ -23,6 +15,7 @@ if Gem::Version.new(Gem::VERSION) < Gem::Version.new('2.1.0') then
 
     class << self
       unless self.method_defined? :__new__
+        $stderr.puts "aliasing new to __new__"
         alias_method :__new__, :new
       end
       def new(*args)
