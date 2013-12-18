@@ -3,6 +3,7 @@
 *.swp
 .bundle
 .config
+.rvmrc
 Gemfile.lock
 coverage
 InstalledFiles

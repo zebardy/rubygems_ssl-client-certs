@@ -20,12 +20,12 @@ describe Gem::RemoteFetcher do
     end
   end
 
-  describe "#configure_connection_for_https" do
-    it "configures ssl settings on the connection" do
-      fetcher = create_fetcher()
-      connection =  #mock Net::HTTP object
-      fetcher.configure_connection_for_https(connection)
-    end
-  end
+#  describe "#configure_connection_for_https" do
+#    it "configures ssl settings on the connection" do
+#      fetcher = create_fetcher()
+#      connection =  #mock Net::HTTP object
+#      fetcher.configure_connection_for_https(connection)
+#    end
+#  end
 
 end

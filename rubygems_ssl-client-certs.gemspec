@@ -17,11 +17,10 @@ Gem::Specification.new do |s|
   s.executables = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  s.add_development_dependency "rubygems", ['< 2.1.0']
+#  s.add_development_dependency "rubygems", ['< 2.1.0']
   s.add_development_dependency "rake"
   s.add_development_dependency "rspec"
   s.add_development_dependency "rspec-core"
   s.add_development_dependency "mime-types", '1.25' if RUBY_VERSION < "1.9"
-#  s.add_development_dependency "simplecov", '~> 0.7.1'
   s.add_development_dependency "coveralls"
 end

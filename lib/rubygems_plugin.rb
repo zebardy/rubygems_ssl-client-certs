@@ -1,17 +1,16 @@
 require 'rubygems/remote_fetcher'
 
-stderr.puts "rubygems ssl client certs plugin loading"
-
-
-class Gem::Version
-
-  def self.correct? version
-    version.to_s =~ /\A\s*([0-9]+(?>\.[0-9a-zA-Z]+)*(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?)?\s*\z/
-  end
-
-end
+$stderr.puts "rubygems ssl client certs plugin loading"
 
 if Gem::Version.new(Gem::VERSION) < Gem::Version.new('2.1.0') then
+
+  class Gem::Version
+
+    def self.correct? version
+      version.to_s =~ /\A\s*([0-9]+(?>\.[0-9a-zA-Z]+)*(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?)?\s*\z/
+    end
+
+  end
 
   class Gem::ConfigFile
 
@@ -20,14 +19,14 @@ if Gem::Version.new(Gem::VERSION) < Gem::Version.new('2.1.0') then
     attr_reader :ssl_verify_mode
 
     attr_reader :ssl_ca_cert
-    stderr.puts "loading Gem::ConfigFile monkey patch"
+    $stderr.puts "loading Gem::ConfigFile monkey patch"
 
     class << self
       unless self.method_defined? :__new__
         alias_method :__new__, :new
       end
       def new(*args)
-        stderr.puts "instantiating new Gem::ConfigFile with patch"
+        $stderr.puts "instantiating new Gem::ConfigFile with patch"
         config = __new__(*args)
         config.set_ssl_vars
         return config
@@ -35,7 +34,7 @@ if Gem::Version.new(Gem::VERSION) < Gem::Version.new('2.1.0') then
     end
 
     def set_ssl_vars
-      stderr.puts "Configuring SSL variables for Gem::ConfigFile"
+      $stderr.puts "Configuring SSL variables for Gem::ConfigFile"
       @ssl_verify_mode = @hash[:ssl_verify_mode] if @hash.key? :ssl_verify_mode
       @ssl_ca_cert = @hash[:ssl_ca_cert] if @hash.key? :ssl_ca_cert
       @ssl_ca_cert = ENV['BUNDLE_SSL_CA_CERT'] unless @ssl_ca_cert
