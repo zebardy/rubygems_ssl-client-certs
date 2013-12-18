@@ -2,12 +2,16 @@ require 'rubygems/remote_fetcher'
 
 stderr.puts "rubygems ssl client certs plugin loading"
 
-if Gem::Version.new(Gem::VERSION) < Gem::Version.new('2.1.0') then
 
-  class Gem::Version
-    VERSION_PATTERN = '[0-9]+(?>\.[0-9a-zA-Z]+)*(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?'
-    ANCHORED_VERSION_PATTERN = /\A\s*(#{VERSION_PATTERN})?\s*\z/
+class Gem::Version
+
+  def self.correct? version
+    version.to_s =~ /\A\s*([0-9]+(?>\.[0-9a-zA-Z]+)*(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?)?\s*\z/
   end
+
+end
+
+if Gem::Version.new(Gem::VERSION) < Gem::Version.new('2.1.0') then
 
   class Gem::ConfigFile
 
