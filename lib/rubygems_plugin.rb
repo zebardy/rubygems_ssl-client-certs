@@ -18,16 +18,14 @@ if Gem::Version.new(Gem::VERSION) < Gem::Version.new('2.1.0') then
         $stderr.puts "aliasing new to __new__"
         alias_method :__new__, :new
       end
-      if Gem.instance_variable_get(:@configuration) then
-        $stderr.puts "forcing a reload of the Gem configuration"
-        Gem.configuration = Gem::ConfigFile.new []  
-      end
+
       def new(*args)
         $stderr.puts "instantiating new Gem::ConfigFile with patch"
         config = __new__(*args)
         config.set_ssl_vars
         return config
       end
+
     end
 
     def set_ssl_vars
@@ -37,6 +35,11 @@ if Gem::Version.new(Gem::VERSION) < Gem::Version.new('2.1.0') then
       @ssl_ca_cert = ENV['BUNDLE_SSL_CA_CERT'] unless @ssl_ca_cert
       @ssl_client_cert = @hash[:ssl_client_cert] if @hash.key? :ssl_client_cert
       @ssl_client_cert = ENV['BUNDLE_SSL_CLIENT_CERT'] unless @ssl_client_cert
+    end
+
+    if Gem.instance_variable_get(:@configuration) then
+      $stderr.puts "forcing a reload of the Gem configuration"
+      Gem.configuration = nil
     end
 
   end
