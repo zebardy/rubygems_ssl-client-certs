@@ -41,6 +41,7 @@ if Gem::Version.new(Gem::VERSION) < Gem::Version.new('2.1.0') then
 
     def connection_for(uri)
       net_http_args = [uri.host, uri.port]
+      $stdout.puts "running patched connection_for"
 
       if @proxy_uri and not no_proxy?(uri.host) then
         net_http_args += [
@@ -75,18 +76,23 @@ if Gem::Version.new(Gem::VERSION) < Gem::Version.new('2.1.0') then
       store = OpenSSL::X509::Store.new
 
       if Gem.configuration.ssl_client_cert
+        $stdout.puts "configuring client ssl cert"
         pem = File.read(Gem.configuration.ssl_client_cert)
         connection.cert = OpenSSL::X509::Certificate.new(pem)
         connection.key = OpenSSL::PKey::RSA.new(pem)
+      else
+        $stdout.puts "no client cert given"
       end
 
       if Gem.configuration.ssl_ca_cert
+        $stdout.puts "configuring ca certs"
         if File.directory? Gem.configuration.ssl_ca_cert
           store.add_path Gem.configuration.ssl_ca_cert
         else
           store.add_file Gem.configuration.ssl_ca_cert
         end
       else
+        $stdout.puts "using default ca certs"
         store.set_default_paths
         add_rubygems_trusted_certs(store)
       end
