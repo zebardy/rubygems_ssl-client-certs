@@ -86,6 +86,8 @@ if Gem::Version.new(Gem::VERSION) < Gem::Version.new('2.1.0') then
         puts "no client cert given"
       end
 
+      store.set_default_paths
+      add_rubygems_trusted_certs(store)
       if Gem.configuration.ssl_ca_cert
         puts "configuring ca certs"
         if File.directory? Gem.configuration.ssl_ca_cert
@@ -95,8 +97,6 @@ if Gem::Version.new(Gem::VERSION) < Gem::Version.new('2.1.0') then
         end
       else
         puts "using default ca certs"
-        store.set_default_paths
-        add_rubygems_trusted_certs(store)
       end
       connection.cert_store = store
     rescue LoadError => e
