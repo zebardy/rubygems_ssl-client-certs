@@ -14,7 +14,6 @@ class Gem::ConfigFile
     end
 
     def new(*args)
-      puts "setting up constructor"
       config = __new__(*args)
       config.set_ssl_vars
       return config
@@ -23,7 +22,6 @@ class Gem::ConfigFile
   end
 
   def set_ssl_vars
-    puts "iinitializing ssl vars"
     @ssl_verify_mode = @hash[:ssl_verify_mode] if @hash.key? :ssl_verify_mode
     @ssl_ca_cert = @hash[:ssl_ca_cert] if @hash.key? :ssl_ca_cert
     @ssl_ca_cert = ENV['BUNDLE_SSL_CA_CERT'] unless @ssl_ca_cert
@@ -54,7 +52,6 @@ if Gem::Version.new(Gem::VERSION) < Gem::Version.new('2.1.0') then
 
     def connection_for(uri)
       net_http_args = [uri.host, uri.port]
-      puts "running patched connection_for"
 
       if @proxy_uri and not no_proxy?(uri.host) then
         net_http_args += [
@@ -89,25 +86,23 @@ if Gem::Version.new(Gem::VERSION) < Gem::Version.new('2.1.0') then
       store = OpenSSL::X509::Store.new
 
       if Gem.configuration.ssl_client_cert
-        puts "configuring client ssl cert"
         pem = File.read(Gem.configuration.ssl_client_cert)
         connection.cert = OpenSSL::X509::Certificate.new(pem)
         connection.key = OpenSSL::PKey::RSA.new(pem)
       else
-        puts "no client cert given"
+        #puts "no client cert given"
       end
 
       store.set_default_paths
       add_rubygems_trusted_certs(store)
       if Gem.configuration.ssl_ca_cert
-        puts "configuring ca certs"
         if File.directory? Gem.configuration.ssl_ca_cert
           store.add_path Gem.configuration.ssl_ca_cert
         else
           store.add_file Gem.configuration.ssl_ca_cert
         end
       else
-        puts "using default ca certs"
+        #puts "using default ca certs"
       end
       connection.cert_store = store
     rescue LoadError => e
