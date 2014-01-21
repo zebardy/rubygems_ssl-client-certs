@@ -41,7 +41,7 @@ if Gem::Version.new(Gem::VERSION) < Gem::Version.new('2.1.0') then
 
   class Gem::RemoteFetcher
 
-    unless Gem::RemoteFetcher.respond_to? "no_proxy?" then
+    unless Gem::RemoteFetcher.respond_to?(:no_proxy?) then
       def no_proxy? host
         host = host.downcase
         get_no_proxy_from_env.each do |pattern|
