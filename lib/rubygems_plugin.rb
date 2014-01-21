@@ -41,6 +41,17 @@ if Gem::Version.new(Gem::VERSION) < Gem::Version.new('2.1.0') then
 
   class Gem::RemoteFetcher
 
+    unless self.method_defined? no_proxy? then
+      def no_proxy? host
+        host = host.downcase
+        get_no_proxy_from_env.each do |pattern|
+          pattern = pattern.downcase
+          return true if host[-pattern.length, pattern.length ] == pattern
+        end
+        return false
+      end
+    end
+
     def connection_for(uri)
       net_http_args = [uri.host, uri.port]
       puts "running patched connection_for"
@@ -117,16 +128,6 @@ if Gem::Version.new(Gem::VERSION) < Gem::Version.new('2.1.0') then
     def https?(uri)
       uri.scheme.downcase == 'https'
     end
-    
-    unless self.method_defined? no_proxy? then
-      def no_proxy? host
-        host = host.downcase
-        get_no_proxy_from_env.each do |pattern|
-          pattern = pattern.downcase
-          return true if host[-pattern.length, pattern.length ] == pattern
-        end
-        return false
-      end
-    end
+
   end
 end
